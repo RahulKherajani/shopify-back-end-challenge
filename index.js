@@ -1,15 +1,7 @@
 const express = require('express');
-const path = require('path');
-// const cors = require('cors');
-const ejs = require('ejs');
-// const bodyParser = require('body-parser');
 
 const app = express();
-// app.use(cors());
 app.set('view engine', 'ejs');
-
-// // Body-parser middleware
-// app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use(
   express.urlencoded({
@@ -17,48 +9,22 @@ app.use(
   })
 );
 
-const database = require('./persistence/database.js');
-
-// database.setKey('items', [
-//   { id: 1, status: 'active', name: 'iPhone13', description: 'A New iPhone13' },
-//   { id: 2, status: 'active', name: 'iPhone12', description: 'A New iPhone12' },
-// ]);
-
-// database.getKey('items').then((value) => {
-//   res.render(__dirname + './templates/index.ejs', { items: value });
-// });
-
 const createRoute = require('./routes/createRoute');
-const deleteRoute = require('./routes/deleteRoute');
+const readRoute = require('./routes/readRoute');
 const editRoute = require('./routes/editRoute');
+const deleteRoute = require('./routes/deleteRoute');
+const undoRoute = require('./routes/undoRoute');
 
 app.use('/', createRoute);
-app.use('/', deleteRoute);
+app.use('/', readRoute);
 app.use('/', editRoute);
-
-app.get('/', async function (req, res) {
-  res.render(__dirname + '/views/read.ejs', {
-    items: [
-      {
-        id: 1,
-        status: 'active',
-        name: 'iPhone13',
-        description: 'A New iPhone13',
-      },
-      {
-        id: 2,
-        status: 'active',
-        name: 'iPhone12',
-        description: 'A New iPhone12',
-      },
-    ],
-  });
-});
+app.use('/', deleteRoute);
+app.use('/', undoRoute);
 
 app.get('*', function (req, res) {
-  return res.status(404).send('Route not defined');
+  return res.status(400).send('Something went wrong!');
 });
 
-let server = app.listen(3000, function () {
+app.listen(3000, function () {
   console.log('App server is running on port 3000');
 });

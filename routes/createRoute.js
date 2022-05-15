@@ -1,14 +1,20 @@
 const express = require('express');
-
 const router = express.Router();
+const database = require('../persistence/database.js');
 
-router.get('/new', (req, res) => {
+router.get('/create', (req, res) => {
   res.render('../views/create.ejs');
 });
 
-router.post('/new', (req, res) => {
+router.post('/create', (req, res) => {
   try {
-    return res.status(200).json({ message: 'Item Created', success: 'true' });
+    database.getKey("items").then((value) => {
+      const length = value.length;
+      value.push({ id: length + 1, status: 'active', name:req.body.name, description: req.body.description, quantity: req.body.quantity});
+      database.setKey("items", value).then(()=> {
+        res.redirect('/');
+      })
+    })
   } catch (err) {
     return res
       .status(500)

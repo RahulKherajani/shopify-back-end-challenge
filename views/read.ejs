@@ -5,29 +5,69 @@
     <title>Web Server</title>
     <meta name="description" content="Roughly 155 characters">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.2/font/bootstrap-icons.css">
   </head>
   <body>
     <div class="container" style="margin:2em auto">
-    <h1>Inventory</h1>
+    <h1>Shopify Backend Developer Intern Challenge</h1>
+    <p class = "lead"> Made with <i class="bi bi-heart-fill"></i> by Rahul Kherajani</p>
+    <p class = "lead"> Source Code: <a href = "https://github.com/RahulKherajani/shopify-back-end-challenge"><i class="bi bi-github"></i></a></p>
+    <p class = "lead">Requirements:</p>
+    <ul><li>
+      Basic CRUD Functionality for Items
+    </li>
+    <li>
+     When deleting, allow deletion comments and undeletion
+    </li></ul>
+    <hr/>
+    <h2>Inventory Management</h2>
+    <div style="display:flex; justify-content:space-between; margin:0.5em">
+    <span style="font-size:1.5rem">Items</span>
+    <span><a class="btn btn-info" href="/create/">Create New</a></span>
+      </div>
     <table class = "table">
         <tr>
           <th>ID</th>
           <th>Name</th>
           <th>Description</th>
+          <th>Quantity</th>
           <th>Status</th>
-          <th>Edit</th>
-          <th>Delete</th>
+          <th>Actions</th>
         </tr>
         <% items.forEach((item) => {%>
             <tr>  
               <td><%= item.id %></td>
               <td><%= item.name %></td>
               <td><%= item.description %></td>
+              <td><%= item.quantity %></td>
               <td><%= item.status %></td>
-              <td><a href="/edit/<%= item.id%>">Edit</a></td>
-              <td><a href="/delete/<%= item.id%>">Delete</a></td>
+              <% if(item.status==='active'){ %>
+              <td><a class="btn btn-warning" href="/edit/<%= item.id%>">Edit</a>
+              <a class="btn btn-danger" href="/delete/<%= item.id%>">Delete</a></td>
+              <% } else{ %>  
+              <td><form action='/undo/<%= item.id %>' method="POST">
+      <button type="submit" class="btn btn-dark">Undo</button>
+    </form></td>
+              <% } %>
             </tr>                                   
          <% }) %>
+    </table>
+  </div>
+  <div class="container" style="margin:2em auto">
+  <p style="font-size:1.5rem; margin:0.5em">Comments</p>
+  <table class = "table">
+        <tr>
+          <th>ID</th>
+          <th>Item ID</th>
+          <th>Comment</th>
+        </tr>
+        <% comments.forEach((comment) => {%>
+        <tr>  
+          <td><%= comment.id %></td>
+          <td><%= comment.itemid %></td>
+          <td><%= comment.comment %></td>
+        </tr>                                   
+        <% }) %>
     </table>
   </div>
   </body>

@@ -8,7 +8,7 @@ router.get('/delete/:id', (req, res) => {
 });
 
 router.post('/delete/:id', (req, res) => {
-  
+try{
     database.getKey("items").then((items) => {
     items[req.params.id - 1].status = 'inactive';
     database.setKey("items", items);
@@ -20,6 +20,9 @@ router.post('/delete/:id', (req, res) => {
       });
     });
   });
+  }catch(err) {
+    res.redirect('/error');
+  }
 });
 
 module.exports = router;

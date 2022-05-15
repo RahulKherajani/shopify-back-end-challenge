@@ -3,10 +3,14 @@ const router = express.Router();
 const database = require('../persistence/database.js');
 
 router.get('/edit/:id', (req, res) => {
+  try{
   database.getKey("items").then((value) => {
     const item = value[req.params.id - 1]
     res.render('../views/edit.ejs', {item: item});
   });
+  } catch(err) {
+    res.redirect('/error');
+  }
 });
 
 router.post('/edit/:id', (req, res) => {
@@ -19,10 +23,8 @@ router.post('/edit/:id', (req, res) => {
         res.redirect('/');
       });
   });
-  } catch (err) {
-    return res
-      .status(500)
-      .json({ message: 'Internal server error', success: 'false' });
+  } catch(err) {
+    res.redirect('/error');
   }
 });
 

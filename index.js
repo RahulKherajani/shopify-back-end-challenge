@@ -21,10 +21,14 @@ app.use('/', editRoute);
 app.use('/', deleteRoute);
 app.use('/', undoRoute);
 
-app.get('*', function (req, res) {
-  return res.status(400).send('Something went wrong!');
+app.get('/error', function(req, res) {
+  res.render('error.ejs');
 });
 
-app.listen(3000, function () {
+app.get('*', function(req, res) {
+  res.render('notfound.ejs');
+});
+
+app.listen(3000, function() {
   console.log('App server is running on port 3000');
 });

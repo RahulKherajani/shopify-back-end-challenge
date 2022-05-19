@@ -1,7 +1,7 @@
-# Shopify Front End Developer Intern Challenge
+# Shopify Back End Developer Intern Challenge
 
 - _Date Created_: 14 MAY 2022
-- _Last Modification Date_: 15 MAY 2022
+- _Last Modification Date_: 18 MAY 2022
 
 ## Authors
 

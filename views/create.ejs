@@ -17,11 +17,19 @@
       </div>
       <div class="form-group">
         <label for="description">Description</label>
-        <input name="description" type="text" class="form-control" id="description" placeholder="Enter Desciption">
+        <textarea name="description" class="form-control" id="description" placeholder="Enter Desciption" rows="5"></textarea>
       </div>
       <div class="form-group">
         <label for="quantity">Quantity*</label>
         <input name="quantity" type="number" class="form-control" id="quantity" placeholder="Enter Quantity" min="0" required>
+      </div>
+      <div class="form-group">
+        <label for="name">City*</label>
+        <select class="form-control" name="city" required>
+          <% cities.forEach((city) => {%>
+            <option value="<%= city.city_id %>"><%= city.city_name %></option>
+          <% }) %>
+        </select>
       </div>
       <p>*Required</p>
       <button type="submit" class="btn btn-primary">Submit</button>

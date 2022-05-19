@@ -31,24 +31,28 @@
           <th>Name</th>
           <th>Description</th>
           <th>Quantity</th>
+          <th>City</th>
           <th>Status</th>
           <th>Actions</th>
         </tr>
         <% items.forEach((item) => {%>
             <tr>  
-              <td><%= item.id %></td>
-              <td><%= item.name %></td>
-              <td><%= item.description %></td>
-              <td><%= item.quantity %></td>
-              <td><%= item.status %></td>
-              <% if(item.status==='active'){ %>
-              <td><a class="btn btn-warning" href="/edit/<%= item.id%>">Edit</a>
-              <a class="btn btn-danger" href="/delete/<%= item.id%>">Delete</a></td>
-              <% } else{ %>  
-              <td><form action='/undo/<%= item.id %>' method="POST">
+              <td><%= item.item_id %></td>
+              <td><%= item.item_name %></td>
+              <td><%= item.item_description %></td>
+              <td><%= item.item_quantity %></td>
+              <td><%= item.city.city_name %></td>
+              <td><%= item.item_status %></td>
+              <% if(item.item_status==='active'){ %>
+              <td><a class="btn btn-warning" href="/edit/<%= item.item_id%>">Edit</a>
+              <a class="btn btn-danger" href="/delete/<%= item.item_id%>">Delete</a></td>
+              <% } else if (item.item_status==='inactive'){ %>  
+              <td><form action='/undo/<%= item.item_id %>' method="POST">
       <button type="submit" class="btn btn-dark">Undo</button>
     </form></td>
-              <% } %>
+              <% } else {%>
+                <td></td>
+              <% }%>
             </tr>                                   
          <% }) %>
     </table>
@@ -63,9 +67,9 @@
         </tr>
         <% comments.forEach((comment) => {%>
         <tr>  
-          <td><%= comment.id %></td>
-          <td><%= comment.itemid %></td>
-          <td><%= comment.comment %></td>
+          <td><%= comment.comment_id %></td>
+          <td><%= comment.item_id %></td>
+          <td><%= comment.comment_text %></td>
         </tr>                                   
         <% }) %>
     </table>

@@ -1,11 +1,8 @@
-const Database = require("@replit/database");
-const db = new Database();
+const { Sequelize } = require('sequelize');
 
-exports.setKey = async function setKey(key, value) {
-  await db.set(key, value);
-};
+const sequelize = new Sequelize('test-db', 'user', 'pass', {
+  dialect: 'sqlite',
+  host: './dev.sqlite'
+})
 
-exports.getKey = async function getKey(key) {
-  let value = await db.get(key);
-  return value;
-};
+module.exports = sequelize;

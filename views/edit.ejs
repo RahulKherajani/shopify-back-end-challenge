@@ -10,24 +10,36 @@
 </head>
 <body>
   <div class = "container" style = "margin:2em auto;">
-    <form action='/edit/<%= item.id %>' method="POST">
-      <h1>Edit Item <%= item.id %></h1>
+    <form action='/edit/<%= item.item_id %>' method="POST">
+      <h1>Edit Item <%= item.item_id %></h1>
       <div class="form-group">
         <label for="name">Name*</label>
-        <input name="name" type="text" class="form-control" id="name" value="<%= item.name %>" placeholder="Enter Name" required>
+        <input name="name" type="text" class="form-control" id="name" value="<%= item.item_name %>" placeholder="Enter Name" required>
       </div>
       <div class="form-group">
         <label for="description">Description</label>
-        <input name="description" type="text" class="form-control" id="description" value="<%= item.description %>" placeholder="Enter Desciption">
+        <textarea name="description" class="form-control" id="description" placeholder="Enter Desciption" rows="5"><%= item.item_description %></textarea>
       </div>
       <div class="form-group">
         <label for="quantity">Quantity*</label>
-        <input name="quantity" type="number" class="form-control" id="quantity" value="<%= item.quantity %>"placeholder="Enter Quantity" min="0" required>
+        <input name="quantity" type="number" class="form-control" id="quantity" value="<%= item.item_quantity %>" placeholder="Enter Quantity" min="0" required>
+      </div>
+      <div class="form-group">
+        <label for="name">City*</label>
+        <select class="form-control" name="city" required>
+          <% cities.forEach((city) => {%>
+            <option value="<%= city.city_id %>"><%= city.city_name %></option>
+          <% }) %>
+        </select>
       </div>
       <p>*Required</p>
       <button type="submit" class="btn btn-primary">Submit</button>
       <a class ="btn btn-secondary" href="/">Cancel</a>
     </form>
   </div>
+  <script>
+    const select = document.querySelector('select')
+    select.value = "<%= item.city_id %>"
+  </script>
 </body>
 </html>
